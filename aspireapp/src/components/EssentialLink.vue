@@ -1,20 +1,18 @@
 <template>
-  <q-item clickable tag="a" target="_blank" :href="link">
+  <q-item clickable :to="link">
     <q-item-section v-if="icon" avatar>
-      <q-icon :name="icon" />
+      <q-icon  :class="activeClass==title?'q-pl-md text-green':'q-pl-md text-white'" :name="icon" />
+      <q-item-label v-if="caption" :class="activeClass==title?'q-pa-sm text-green':'q-pa-sm text-white'">{{ title }}</q-item-label>
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
-      <q-item-label caption>
-        {{ caption }}
-      </q-item-label>
+      <q-item-label :class="activeClass==title?'q-pa-sm text-green':'q-pa-sm text-white'" v-if="!caption">{{ title }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent,ref } from "vue";
 
 export default defineComponent({
   name: "EssentialLink",
@@ -25,19 +23,28 @@ export default defineComponent({
     },
 
     caption: {
-      type: String,
-      default: "",
+      type: Boolean,
+      default: false,
     },
 
     link: {
       type: String,
-      default: "#",
+      default: "",
     },
 
     icon: {
       type: String,
       default: "",
     },
+    activeClass: {
+      type:String,
+      defualt: ""
+    }
   },
+  setup () {
+    return {
+           
+    }
+  } 
 });
 </script>

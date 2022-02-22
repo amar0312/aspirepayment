@@ -1,37 +1,31 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title> Quasar App </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+  
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered v-if="$q.platform.is.desktop">
+  
+      <div class="q-pa-lg">
+        <img alt="digital banking singapore" src="https://global-uploads.webflow.com/5ed5b60be1889f546024ada0/5ed8a32c8e1f40c8d24bc32b_Aspire%20Logo%402x.png" style="width: 128px" />
+        <q-item-label caption class="q-pa-sm">
+          Trusted way of banking 3000+ SMEs and startups in Singapore
+        </q-item-label>
+      </div>
+  
+  
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <EssentialLink v-for="link in essentialLinks" :activeClass="activeClass" :key="link.title" v-bind="link" @click="selectClass(link.title)" />
       </q-list>
     </q-drawer>
-
+  
     <q-page-container>
       <router-view />
     </q-page-container>
+    <q-footer elevated class="bg-grey-8 text-white">
+      <div class="row">
+  
+        <EssentialLink v-for="link in essentialLinks" :key="link.title" :activeClass="activeClass" v-bind="link" caption="true" @click="selectClass(link.title)" />
+  
+      </div>
+    </q-footer>
   </q-layout>
 </template>
 
@@ -40,47 +34,30 @@ import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev",
+    title: "Home",
+    icon: "mdi-chevron-up-circle-outline",
+    link: "/"
   },
   {
-    title: "Github",
-    caption: "github.com/quasarframework",
-    icon: "code",
-    link: "https://github.com/quasarframework",
+    title: "Cards",
+    icon: "credit_card",
+    link: "card"
   },
   {
-    title: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
-    icon: "chat",
-    link: "https://chat.quasar.dev",
+    title: "Payments",
+    icon: "swap_horizontal_circle",
+    link: "/"
   },
   {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
+    title: "Credit",
+    icon: "arrow_circle_up",
+    link: "/"
   },
   {
-    title: "Twitter",
-    caption: "@quasarframework",
-    icon: "rss_feed",
-    link: "https://twitter.quasar.dev",
-  },
-  {
-    title: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-    link: "https://facebook.quasar.dev",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
-    link: "https://awesome.quasar.dev",
-  },
+    title: "Settings",
+    icon: "person_outline",
+    link: "/"
+  }
 ];
 
 import { defineComponent, ref } from "vue";
@@ -89,7 +66,7 @@ export default defineComponent({
   name: "MainLayout",
 
   components: {
-    EssentialLink,
+    EssentialLink
   },
 
   setup() {
@@ -97,11 +74,24 @@ export default defineComponent({
 
     return {
       essentialLinks: linksList,
+      activeClass: ref(""),
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
+      }
     };
   },
+  methods: {
+    selectClass(title) {
+      this.activeClass = title;
+    }
+  }
 });
 </script>
+
+<style>
+.q-drawer {
+  background-color: darkslategray;
+}
+</style>
+
