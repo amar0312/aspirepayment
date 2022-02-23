@@ -19,7 +19,7 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-footer elevated class="bg-grey-8 text-white">
+    <q-footer elevated class="bg-grey-8 text-white" style="height:60px" v-if="$q.platform.is.mobile">
       <div class="row">
   
         <EssentialLink v-for="link in essentialLinks" :key="link.title" :activeClass="activeClass" v-bind="link" caption="true" @click="selectClass(link.title)" />
